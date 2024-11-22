@@ -5,11 +5,11 @@ name: Complete Devops Projects Pipeline
 on:
   push:
     branches:
-      -main
+      - main
 
 jobs:
   build_and_push:
-    runs-on: unbuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: action/checkout@v2
@@ -18,10 +18,10 @@ jobs:
           echo "SHORT_SHA=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_ENV
       - name: Build Docker Image
         run: |
-          docker build -t thedevopsdude/complete-devops-project:${{ env.SHORT_SHA }} .
+          docker build -t devcypher2023/complete-devops-project:${{ env.SHORT_SHA }} .
       - name: Login to Dockerhub
         run: |
           echo "${{ secrets.DOCKER_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
       - name: Push to Dockerhub
         run: |
-          docker push thedevopsdude/complete-devops-project:${{ env.SHORT_SHA }}
+          docker push devcypher2023/complete-devops-project:${{ env.SHORT_SHA }}
